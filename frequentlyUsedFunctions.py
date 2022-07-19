@@ -3,9 +3,11 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 
-profile = webdriver.FirefoxProfile(r'C:\Users\oscar\AppData\Roaming\Mozilla\Firefox\Profiles\piv2myws.default-release')
+profilePath = r'' #C:\Users\oscar\AppData\Roaming\Mozilla\Firefox\Profiles\...
+profile = webdriver.FirefoxProfile(profilePath)
 
-driver = webdriver.Firefox(profile, executable_path=r'C:\Users\oscar\Desktop\code\selenium\geckodriver\geckodriver.exe')
+execPath = r'' #...geckodriver.exe')'
+driver = webdriver.Firefox(profile, executable_path=execPath)
 
 ### FUNCTIONS ###
 
