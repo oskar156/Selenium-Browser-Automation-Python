@@ -1,0 +1,53 @@
+-----------------------------------------
+STEP 1 - Download and Install Python
+-----------------------------------------
+-Go to https://www.python.org/downloads/release/python-3114/ and scroll down to the bottom of the page.
+-Click on Windows installer (64-bit).
+-Run the downloaded file and follow the installation wizard.
+
+-----------------------------------------
+STEP 2 - Install Python Libraries
+-----------------------------------------
+-Open start menu, type python, select "open file location", right click on the file name "Python 3.11 (64-bit)" and select "open file location". This is the root python folder.
+-Go into the Scripts folder and copy its path
+-Open the start menu and type cmd, open Command Prompt
+-Type "cd " (that's cd followed by a SPACE), then the path of the Scripts folder of your Python install you copied earlier, then enter
+
+Example of what the command should look like: 
+cd C:\Users\jzendejas\AppData\Local\Programs\Python\Python311\Scripts
+
+-then type and enter the following commands one by one in the Command Prompt:
+pip install selenium
+pip install google-auth
+
+-you can close Command Prompt
+
+
+-----------------------------------------
+STEP 3 - Set up a space for core po automation
+-----------------------------------------
+1. Download credentials.json from Asana task https://app.asana.com/0/1200050614619090/1206332168381185 or from here: https://drive.google.com/file/d/10p5W7L7pNwd06cz1hm-Ofu5Nox0eohFA/view?usp=sharing
+
+2. Save credentials.json in a folder (you will re-use this folder every time you submit the core orders using browser automation)
+
+2. Go to the CONSOLIDATED DE VENDOR SHEET
+https://docs.google.com/spreadsheets/d/1bN3nhB6GRyDRj2SosTvW1SRUn1lMp3SOKrVOMKVGbwc/edit#gid=1364619789
+
+3. Quickly double-check the data entry was done correctly (correct ORDER NUMBER)
+
+4. Click the Scripts dropdown > Create Browser Automation File to Submit Orders in Core
+
+5. Visit download link in the pop-up, click downlaod anyway, save the file in the same folder where you saved credentials.json in step 2)
+
+6. Run the python file you just downloaded (you may have to give the script permissions)
+
+7. wait for the script to finish creating orders and updating the google sheet
+
+8. If an order was unable to be created, or was created but not complete, you will be able to tell in the Google Sheet's FULL PO and PO LINK columns
+
+9. If this is the first time you're running it or if token.json doesn't exist in your folder that you'll reuse, then you'll need to give access
+
+-----------------------------------------------------------------------------------------
+ISSUES:
+SOMETIMES POs ARE CREATED BUT NOT COMPLETED
+
