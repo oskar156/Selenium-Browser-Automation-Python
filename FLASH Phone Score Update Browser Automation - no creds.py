@@ -28,7 +28,7 @@ database_name = "Consumer"   #OPTIONAL
 #USUALLY LEAVE THE BELOW AS IS
 exe_path = r'C:\Program Files\Mozilla Firefox\firefox.exe'
 driver_path = r'E:\BROWSER AUTOMATION\geckodriver.exe'
-flash_login_url = 'http://flash.quickcounts.net/fclogin.htm'
+flash_login_url = ''
 flash_username = ''
 flash_password = ''
 
