@@ -1,0 +1,107 @@
+import os
+import time
+if 1:
+ from datetime import datetime
+ from selenium import webdriver
+ from selenium.webdriver import Firefox
+ from selenium.webdriver.firefox.options import Options
+ from selenium.webdriver.firefox.service import Service
+ from selenium.webdriver.common.by import By #for selenium's find_element
+ 
+exe_path=r'C:\Program Files\Mozilla Firefox\firefox.exe'
+driver_path=r'\geckodriver.exe'
+
+options.binary_location = exe_path
+service = Service(driver_path)
+
+driver = webdriver.Firefox(service=service, options=options)
+
+driver.get("https://www.ebay.com/sch/11498/i.html?_nkw=mens+boots&_from=R40&_ipg=120")
+
+out_file_path = r'\out_file.csv'
+out_file = open(out_file_path, "w", encoding="utf-8")
+out_file.write("i,HREF,PRODUCT_NAME,SIZE,COLOR,CURRENT_PRICE,SHIPPING_COST,DESCRIPTION\n")  
+
+elements = driver.find_elements(By.XPATH,"//a[@class='s-item__link']")
+hrefs=[]
+for el in elements:
+    hrefs.push(el.get_attribute("href"))
+
+i = 0
+for href in hrefs:
+  print("i: "+str(i))
+  driver.get(href)
+  time.sleep(3)
+
+  product_name = ""
+  try:
+    product_name = driver.find_element(By.XPATH,"//h1/span").text
+  except Exception as e:
+    product_name = e
+    print("product_name "+ str(e)[0:25])
+
+  size = ""
+  try:
+    size = driver.find_element(By.XPATH,"//dt/div/div/span[text()='Size']/../../../following-sibling::dd/div/div/span").text
+  except Exception as e:
+    try:
+      size = driver.find_element(By.XPATH,"//dt/div/div/span[contains(text(), 'Size')]/../../../following-sibling::dd/div/div/span").text
+    except Exception as e:
+      size = e
+      print("size  "+ str(e)[0:25])
+
+  color = ""
+  try:
+    color = driver.find_element(By.XPATH,"//dt/div/div/span[text()='Color']/../../../following-sibling::dd/div/div/span").text
+  except Exception as e:
+    color = e
+    print("color "+ str(e)[0:25])
+  
+  price = ""
+  try:
+    price = driver.find_element(By.XPATH,"//div[@class='x-price-primary']/span").text
+  except Exception as e:
+    price = e  
+    print("price "+ str(e)[0:25])
+
+  shipping = ""
+  try:
+    shipping = driver.find_element(By.XPATH,"//span[text()='Shipping:']/../../../following-sibling::div/div/div/span").text
+  except Exception as e:
+    shipping = e
+    print("shipping "+ str(e)[0:25])
+  
+  description = ""
+  try:
+    description_start = driver.find_element(By.XPATH,"//span[contains(text(), 'Item description from the seller')]")
+    time.sleep(0.5)
+    driver.execute_script("arguments[0].scrollIntoView();", description_start)
+    time.sleep(0.5)
+    driver.switch_to.frame(frame_reference=driver.find_element(By.XPATH,"//iframe[@id='desc_ifr']"))
+    description = driver.find_element(By.XPATH,"//body").text
+    driver.switch_to.default_content()
+  except Exception as e:
+    description = e
+    print("description "+ str(e)[0:25])
+
+  print(product_name)
+  print(size)
+  print(color)
+  print(price)
+  print(shipping)
+
+  line = ""
+  line = str(line) + '"' + str(i).replace('"','') + '"' + ','
+  line = str(line) + '"' + str(href).replace('"','') + '"' + ','  
+  line = str(line) + '"' + str(product_name).replace('"','') + '"' + ','  
+  line = str(line) + '"' + str(size).replace('"','') + '"' + ','  
+  line = str(line) + '"' + str(color).replace('"','') + '"' + ','  
+  line = str(line) + '"' + str(price).replace('"','') + '"' + ','  
+  line = str(line) + '"' + str(shipping).replace('"','') + '"' + ','   
+  line = str(line) + '"' + str(description).replace('"','').replace('\\','\\\\') + '"' + '\n' 
+  out_file.write(line)
+  print(line[0:50])
+  i = i + 1
+
+out_file.flush()
+out_file.close()
