@@ -11,6 +11,7 @@ if 1:
 exe_path=r'C:\Program Files\Mozilla Firefox\firefox.exe'
 driver_path=r'\geckodriver.exe'
 
+options = Options()
 options.binary_location = exe_path
 service = Service(driver_path)
 
